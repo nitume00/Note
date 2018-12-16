@@ -1,30 +1,6 @@
-console.log("staring note js")
 const fs= require('fs');
 const _= require('lodash');
-
-var utility={
-    fetchAllNotes:()=>{
-        try{
-            var notsString = fs.readFileSync('notes.json');
-            return JSON.parse(notsString);
-           }catch(e){
-                return [];
-           }
-       },
-       writeNode:(notes)=>{
-        fs.writeFileSync('notes.json',JSON.stringify(notes));
-    },
-    displayNode: (note)=>{
-        debugger;
-        console.log('----------------');
-        console.log(`title is :${note.title}`);
-        console.log(`body is : ${note.body}`);
-    },
-    checkIfNodeExist:(notes,title)=>{
-        return notes.filter((note)=>note.title===title);
-    }
-}
- 
+const utility= require('./utility.js');
 var noteService= {
      addNote :(title,body) => {
         var note={title,body};
@@ -40,7 +16,7 @@ var noteService= {
         return utility.fetchAllNotes();
     },
     deleteNode:(title)=>{
-        var notes = fetchAllNotes();
+        var notes = utility.fetchAllNotes();
         var note  = utility.checkIfNodeExist(notes,title);
         if(note){
             _.remove(notes,{title:title});
